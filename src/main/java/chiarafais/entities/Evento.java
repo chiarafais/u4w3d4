@@ -10,8 +10,10 @@ import java.util.List;
 
 @Entity
 @Table(name = "evento")
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "tipo-evento")
 
-public class Evento {
+public abstract class Evento {
     @Id
     @GeneratedValue
     private long id;
@@ -22,9 +24,9 @@ public class Evento {
     private LocalDate data_evento;
     @Column(name = "descrizione")
     private String descrizione;
-    @Column(name = "tipo_evento")
+    @Column(name = "tipo_evento", nullable = false, insertable = false, updatable = false)
     @Enumerated(EnumType.STRING)
-    private EventoType eventoType;
+    private EventoType tipoEvento;
     @Column(name = "numero_max_partecipanti")
     private int numero_max_partecipanti;
 
@@ -44,7 +46,7 @@ public class Evento {
         this.titolo = titolo;
         this.data_evento = data_evento;
         this.descrizione = descrizione;
-        this.eventoType = eventoType;
+        this.tipoEvento = eventoType;
         this.numero_max_partecipanti = numero_max_partecipanti;
         this.location = location;
     }
@@ -78,11 +80,11 @@ public class Evento {
     }
 
     public EventoType getEventoType() {
-        return eventoType;
+        return tipoEvento;
     }
 
     public void setEventoType(EventoType eventoType) {
-        this.eventoType = eventoType;
+        this.tipoEvento = eventoType;
     }
 
     public int getNumero_max_partecipanti() {
@@ -100,7 +102,7 @@ public class Evento {
                 ", titolo='" + titolo + '\'' +
                 ", data_evento=" + data_evento +
                 ", descrizione='" + descrizione + '\'' +
-                ", eventoType=" + eventoType +
+                ", eventoType=" + tipoEvento +
                 ", numero_max_partecipanti=" + numero_max_partecipanti +
                 '}';
     }

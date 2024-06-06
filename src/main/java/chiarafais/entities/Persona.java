@@ -20,9 +20,12 @@ public class Persona {
     private LocalDate data_di_nascita;
     @Enumerated(EnumType.STRING)
     private SessoType sessoType;
-    @ManyToMany(mappedBy = "partecipazioni")
+    @OneToMany(mappedBy = "partecipazioni")
     private  List<Partecipazioni> partecipazioniList;
 
+    @ManyToOne
+    @JoinColumn(name = "garaDiAtletica_id")
+    private GaraDiAtletica garaDiAtletica;
 
     public Persona() {
 
